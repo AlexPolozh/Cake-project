@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holiday Cakes — Order Form</title>
+<style>
+  :root {
+    --red: #b3282d;
+    --green: #2e6b3e;
+    --cream: #fff8f0;
+    --text: #3a2a1a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    margin: 0;
+    padding: 24px 12px 60px;
+  }
+  .card {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    padding: 32px;
+    border: 2px solid var(--red);
+  }
+  h1 {
+    text-align: center;
+    color: var(--red);
+    margin-top: 0;
+    font-size: 1.8rem;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--green);
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+  fieldset {
+    border: 1px solid #e0d3c0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 16px 18px;
+  }
+  legend {
+    font-weight: 700;
+    color: var(--red);
+    padding: 0 6px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .field {
+    margin-bottom: 14px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccb89c;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 70px;
+  }
+  .radio-row, .checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .radio-row label, .checkbox-row label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+  input[type="radio"], input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--red);
+  }
+  .datetime-row {
+    display: flex;
+    gap: 12px;
+  }
+  .datetime-row .field { flex: 1; }
+  .msg-text {
+    margin-top: 8px;
+    display: none;
+  }
+  .msg-text.active { display: block; }
+  .error {
+    color: var(--red);
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: none;
+  }
+  .field.invalid input, .field.invalid textarea, .field.invalid select {
+    border-color: var(--red);
+  }
+  .field.invalid .error { display: block; }
+  button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+  }
+  button[type="submit"]:hover {
+    background: #8f2024;
+  }
+  #confirmation {
+    display: none;
+    text-align: center;
+    padding: 50px 20px;
+  }
+  #confirmation h2 {
+    color: var(--red);
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  #confirmation p {
+    color: var(--green);
+    font-size: 1.1rem;
+  }
+  .required {
+    color: var(--red);
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <div id="formWrapper">
+    <h1>🎄 Holiday Cakes 🎄</h1>
+    <p class="subtitle">Order your holiday cake online!</p>
+
+    <form id="orderForm" novalidate>
+
+      <fieldset>
+        <legend>Your Information</legend>
+
+        <div class="field" data-field="name">
+          <label for="name">Full Name <span class="required">*</span></label>
+          <input type="text" id="name" name="name" required>
+          <div class="error">Please enter your name.</div>
+        </div>
+
+        <div class="field" data-field="email">
+          <label for="email">Email <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required>
+          <div class="error">Please enter a valid email address.</div>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label for="phone">Phone <span class="required">*</span></label>
+          <input type="tel" id="phone" name="phone" required>
+          <div class="error">Please enter your phone number.</div>
+        </div>
+
+        <div class="field" data-field="address">
+          <label for="address">Address <span class="required">*</span></label>
+          <textarea id="address" name="address" required></textarea>
+          <div class="error">Please enter an address.</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pickup or Delivery</legend>
+
+        <div class="field" data-field="fulfillment">
+          <div class="radio-row">
+            <label><input type="radio" name="fulfillment" value="Pickup" required> Pickup</label>
+            <label><input type="radio" name="fulfillment" value="Delivery" required> Delivery</label>
+          </div>
+          <div class="error">Please choose pickup or delivery.</div>
+        </div>
+
+        <div class="datetime-row">
+          <div class="field" data-field="date">
+            <label for="date">Date <span class="required">*</span></label>
+            <input type="date" id="date" name="date" required>
+            <div class="error">Please choose a date.</div>
+          </div>
+          <div class="field" data-field="time">
+            <label for="time">Time <span class="required">*</span></label>
+            <input type="time" id="time" name="time" required>
+            <div class="error">Please choose a time.</div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Cake Details</legend>
+
+        <div class="field" data-field="cakeType">
+          <label for="cakeType">Cake Type <span class="required">*</span></label>
+          <select id="cakeType" name="cakeType" required>
+            <option value="" disabled selected>Select a cake type</option>
+            <option value="Vanilla">Vanilla</option>
+            <option value="Chocolate">Chocolate</option>
+            <option value="Carrot">Carrot</option>
+          </select>
+          <div class="error">Please select a cake type.</div>
+        </div>
+
+        <div class="field">
+          <label>Decorations</label>
+          <div class="checkbox-row">
+            <label><input type="checkbox" name="decorations" value="Berries"> Berries</label>
+            <label><input type="checkbox" name="decorations" value="Sprinkles"> Sprinkles</label>
+            <label><input type="checkbox" name="decorations" value="Candy canes"> Candy canes</label>
+            <label><input type="checkbox" name="decorations" value="Fruits"> Fruits</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label><input type="checkbox" id="wantsMessage" name="wantsMessage"> Add a personalized message</label>
+          <div class="msg-text field" id="msgTextField" data-field="personalMessage">
+            <textarea id="personalMessage" name="personalMessage" placeholder="Type your message here..."></textarea>
+            <div class="error">Please type your message, or uncheck this box.</div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Marketing</legend>
+        <label><input type="checkbox" name="marketingConsent"> I'd like to receive promo materials from Holiday Cakes</label>
+      </fieldset>
+
+      <button type="submit">PLACE ORDER</button>
+    </form>
+  </div>
+
+  <div id="confirmation">
+    <h2>THANKS, SWEETIE!</h2>
+    <p>Your holiday cake order has been received. We'll be in touch soon!</p>
+  </div>
+
+</div>
+
+<script>
+  const form = document.getElementById('orderForm');
+  const wantsMessage = document.getElementById('wantsMessage');
+  const msgTextField = document.getElementById('msgTextField');
+  const personalMessage = document.getElementById('personalMessage');
+
+  wantsMessage.addEventListener('change', () => {
+    msgTextField.classList.toggle('active', wantsMessage.checked);
+    if (!wantsMessage.checked) {
+      personalMessage.value = '';
+      msgTextField.classList.remove('invalid');
+    }
+  });
+
+  function setInvalid(fieldEl, invalid) {
+    fieldEl.classList.toggle('invalid', invalid);
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let valid = true;
+
+    // Simple required text/email/tel/date/time/select/textarea fields
+    const simpleFields = ['name', 'email', 'phone', 'address', 'date', 'time', 'cakeType'];
+    simpleFields.forEach(id => {
+      const input = document.getElementById(id);
+      const fieldEl = input.closest('.field');
+      const ok = input.checkValidity() && input.value.trim() !== '';
+      setInvalid(fieldEl, !ok);
+      if (!ok) valid = false;
+    });
+
+    // Pickup/Delivery radio
+    const fulfillmentField = document.querySelector('[data-field="fulfillment"]');
+    const fulfillmentChosen = form.querySelector('input[name="fulfillment"]:checked');
+    setInvalid(fulfillmentField, !fulfillmentChosen);
+    if (!fulfillmentChosen) valid = false;
+
+    // Personalized message text required only if checkbox is checked
+    if (wantsMessage.checked && personalMessage.value.trim() === '') {
+      setInvalid(msgTextField, true);
+      valid = false;
+    } else {
+      setInvalid(msgTextField, false);
+    }
+
+    if (!valid) {
+      const firstInvalid = form.querySelector('.invalid');
+      if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // No backend is connected yet — this just shows the confirmation screen.
+    document.getElementById('formWrapper').style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
